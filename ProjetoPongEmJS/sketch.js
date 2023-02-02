@@ -3,24 +3,32 @@ let ballX = 400;
 let ballY = 300;
 let ballDiameter = 25;
 let ballRadius = ballDiameter / 2;
-//Ball Move Atributes
+//Ball Movimentation
 let speedX = 5;
-let speedY = 5;
+let speedY = 0;
 let moveX = ballX + speedX;
-//Player Atributes
+//Player Racket Atributes
 let playerRacketX = 10;
 let playerRacketY = 300;
-let playerRacketWidth = 10;
-let playerRacketHeight = 90;
+let racketWidth = 10;
+let racketHeight = 90;
+//Player Movimentation
 let playerMovementY;
-
+//Opponent Racket Atributes
+let opponentRacketX = 780;
+let opponentRacketY = 220;
+let opponentRacketWidth = 10;
+let opponentRacketHeight = 90;
+let opponentRacketYMovimentationSpeed;
 function act() {
   drawBall();
-  drawPlayerRacket();
+  drawRacket(playerRacketX, playerRacketY);
+  drawRacket(opponentRacketX, opponentRacketY);
   movimentation();
   bounceAtEdge();
   playerRacketMovement();
   isTouchingRacket();
+  //opponentRacketMovimentation();
 }
 function bounceAtEdge() {
   if (ballX - ballRadius < 0 || ballX + ballRadius > width) {
@@ -45,9 +53,10 @@ function draw() {
   background(0);
   act();
 }
-function drawPlayerRacket(){
-  rect(playerRacketX, playerRacketY, playerRacketWidth, playerRacketHeight);
+function drawRacket(x, Y){
+  rect( x , Y , racketWidth, racketHeight);
 }
+
 function playerRacketMovement(){
 if (keyIsDown(UP_ARROW)){
   playerRacketY -= 10;
@@ -57,7 +66,12 @@ if (keyIsDown(DOWN_ARROW)){
 }
 }
 function isTouchingRacket(){
-  if( ballX - ballRadius < playerRacketX + playerRacketWidth && ballY - ballRadius < playerRacketY + playerRacketHeight && ballY + ballRadius > playerRacketY){
+  if( ballX + ballRadius > opponentRacketX - racketWidth && ballY + ballRadius > opponentRacketY + racketHeight && ballY - ballRadius < opponentRacketY){
  speedX *= -1;
   }
+
+}
+function opponentRacketMovimentation(){
+opponentRacketYMovimentationSpeed = ballY - opponentRacketY - racketHeight/2 - 30;
+opponentRacketY += opponentRacketYMovimentationSpeed;
 }
