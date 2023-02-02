@@ -12,12 +12,14 @@ let playerRacketX = 10;
 let playerRacketY = 300;
 let playerRacketWidth = 10;
 let playerRacketHeight = 90;
+let playerMovementY;
 
 function act() {
   drawBall();
   drawPlayerRacket();
   movimentation();
   bounceAtEdge();
+  playerRacketMovement();
 }
 function bounceAtEdge() {
   if (ballX - ballRadius < 0 || ballX + ballRadius > width) {
@@ -44,4 +46,12 @@ function draw() {
 }
 function drawPlayerRacket(){
   rect(playerRacketX, playerRacketY, playerRacketWidth, playerRacketHeight);
+}
+function playerRacketMovement(){
+if (keyIsDown(UP_ARROW)){
+  playerRacketY -= 10;
+}
+if (keyIsDown(DOWN_ARROW)){
+  playerRacketY += 10;
+}
 }
