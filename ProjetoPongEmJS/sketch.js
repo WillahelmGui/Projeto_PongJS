@@ -20,6 +20,7 @@ function act() {
   movimentation();
   bounceAtEdge();
   playerRacketMovement();
+  isTouchingRacket();
 }
 function bounceAtEdge() {
   if (ballX - ballRadius < 0 || ballX + ballRadius > width) {
@@ -54,4 +55,9 @@ if (keyIsDown(UP_ARROW)){
 if (keyIsDown(DOWN_ARROW)){
   playerRacketY += 10;
 }
+}
+function isTouchingRacket(){
+  if( ballX - ballRadius < playerRacketX + playerRacketWidth && ballY - ballRadius < playerRacketY + playerRacketHeight && ballY + ballRadius > playerRacketY){
+ speedX *= -1;
+  }
 }
