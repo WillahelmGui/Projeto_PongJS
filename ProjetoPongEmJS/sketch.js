@@ -17,19 +17,25 @@ let playerMovementY;
 //Opponent Racket Atributes
 let opponentRacketX = 780;
 let opponentRacketY = 310;
+//Scoreboard
+let playerPoints = 0;
+let opponentPoints = 0;
 
 let opponentRacketYMovimentationSpeed;
 function act() {
+  drawMiddleLines();
   drawBall();
   drawRacket(playerRacketX, playerRacketY);
   drawRacket(opponentRacketX, opponentRacketY);
-  movimentation();
-  bounceAtEdge();
-  playerRacketMovement();
+  moveBall();
+  movePlayerRacket();
+  moveOpponentRacket();
+  rotateAtEdge();
   isTouchingRacket();
-  opponentRacketMovimentation();
+  showScoreboard();
+  scoredPoint();
 }
-function bounceAtEdge() {
+function rotateAtEdge() {
   if (ballX - ballRadius < 0 || ballX + ballRadius > width) {
     speedX *= -1;
   }
@@ -37,7 +43,7 @@ function bounceAtEdge() {
     speedY *= -1;
   }
 }
-function movimentation() {
+function moveBall() {
   ballX += speedX;
   ballY += speedY;
 }
@@ -55,8 +61,16 @@ function draw() {
 function drawRacket(X, Y) {
   rect(X, Y, racketWidth, racketHeight);
 }
+function drawMiddleLines() {
+  rect(400, 0, 10, 80);
+  rect(400, 100, 10, 80);
+  rect(400, 200, 10, 80);
+  rect(400, 300, 10, 80);
+  rect(400, 400, 10, 80);
+  rect(400, 500, 10, 80);
+}
 
-function playerRacketMovement() {
+function movePlayerRacket() {
   if (keyIsDown(UP_ARROW)) {
     playerRacketY -= 10;
   }
@@ -76,7 +90,26 @@ function isTouchingRacket() {
     speedX *= -1;
   }
 }
-function opponentRacketMovimentation() {
+function moveOpponentRacket() {
   opponentRacketYMovimentationSpeed = ballY - opponentRacketY - racketHeight / 2 - 30;
   opponentRacketY += opponentRacketYMovimentationSpeed;
+}
+function showScoreboard() {
+  text("Pontos: " + playerPoints, 200, 10);
+  fill(255, 255, 255);
+  text("Pontos: " + opponentPoints, 600, 10)
+  fill(255, 255, 255)
+}
+function resetBallPosition(){
+ballX = 400;
+ballY = 300;
+}
+function scoredPoint() {
+  if (ballX - ballRadius < 1)
+    playerPoints++;
+   resetBallPosition();
+  if (ballX + ballRadius > 799) {
+    opponentPoints++;
+    resetBallPosition();
+  }
 }
