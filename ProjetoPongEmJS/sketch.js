@@ -17,11 +17,12 @@ let playerMovementY;
 //Opponent Racket Atributes
 let opponentRacketX = 780;
 let opponentRacketY = 310;
+let opponentRacketYMovimentationSpeed;
+let opponentErrorChance = 0;
 //Scoreboard
 let playerPoints = 0;
 let opponentPoints = 0;
 
-let opponentRacketYMovimentationSpeed;
 function act() {
   drawMiddleLines();
   drawBall();
@@ -93,6 +94,7 @@ function isTouchingRacket() {
 function moveOpponentRacket() {
   opponentRacketYMovimentationSpeed = ballY - opponentRacketY - racketHeight / 2 - 30;
   opponentRacketY += opponentRacketYMovimentationSpeed;
+  calculateErrorChance();
 }
 function showScoreboard() {
   text("Pontos: " + playerPoints, 200, 10);
@@ -100,16 +102,25 @@ function showScoreboard() {
   text("Pontos: " + opponentPoints, 600, 10)
   fill(255, 255, 255)
 }
-function resetBallPosition(){
-ballX = 400;
-ballY = 300;
-}
 function scoredPoint() {
   if (ballX - ballRadius < 1)
     playerPoints++;
-   resetBallPosition();
+  
   if (ballX + ballRadius > 799) {
     opponentPoints++;
-    resetBallPosition();
+    
+  }
+}
+function calculateErrorChance(){
+  if (opponentPoints >= playerPoints) {
+    opponentErrorChance += 1
+    if (opponentErrorChance >= 39){
+    opponentErrorChance = 40
+    }
+  } else {
+    opponentErrorChance -= 1
+    if (opponentErrorChance <= 35){
+    opponentErrorChance = 35
+    }
   }
 }
