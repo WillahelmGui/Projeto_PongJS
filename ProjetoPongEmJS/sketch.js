@@ -73,10 +73,10 @@ function drawMiddleLines() {
 
 function movePlayerRacket() {
   if (keyIsDown(UP_ARROW)) {
-    playerRacketY -= 10;
+    playerRacketY -= 5;
   }
   if (keyIsDown(DOWN_ARROW)) {
-    playerRacketY += 10;
+    playerRacketY += 5;
   }
 }
 function isTouchingRacket() {
@@ -93,7 +93,7 @@ function isTouchingRacket() {
 }
 function moveOpponentRacket() {
   opponentRacketYMovimentationSpeed = ballY - opponentRacketY - racketHeight / 2 - 30;
-  opponentRacketY += opponentRacketYMovimentationSpeed;
+  opponentRacketY += opponentRacketYMovimentationSpeed + opponentErrorChance;
   calculateErrorChance();
 }
 function showScoreboard() {
